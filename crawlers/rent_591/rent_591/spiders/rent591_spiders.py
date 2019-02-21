@@ -1,7 +1,9 @@
 """Rent591 spiders."""
 import json
 import scrapy
+from datetime import datetime
 from ajilog import logger
+from .. import items
 
 
 class Rent591Spider(scrapy.Spider):
@@ -75,18 +77,18 @@ class Rent591Spider(scrapy.Spider):
             else:
                 sex_limit = 2
 
-            rent_info = {
-                'house_id': house_id,
-                'house_type': house_type,
-                'house_recent': house_recent,
-                'city': city,
-                'renter': renter,
-                'renter_sex': renter_sex,
-                'renter_type': renter_type,
-                'phone_number': phone_number,
-                'sex_limit': sex_limit
-            }
-            yield rent_info
+            yield items.Rent591Item(
+                house_id=house_id,
+                house_type=house_type,
+                house_recent=house_recent,
+                city=city,
+                renter=renter,
+                renter_type=renter_type,
+                renter_sex=renter_sex,
+                phone_number=phone_number,
+                sex_limit=sex_limit,
+                date_time=datetime.now()
+            )
         except Exception as e:
             self.except_list.append({
                 'house_id': response.meta['house_id'],

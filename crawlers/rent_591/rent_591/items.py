@@ -1,14 +1,18 @@
-# -*- coding: utf-8 -*-
-
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://doc.scrapy.org/en/latest/topics/items.html
-
+"""Rent591 items."""
 import scrapy
 
 
 class Rent591Item(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    """Rent house item."""
+
+    id = scrapy.Field()
+    house_id = scrapy.Field()
+    house_type = scrapy.Field()
+    house_recent = scrapy.Field()
+    city = scrapy.Field()
+    renter = scrapy.Field()
+    renter_type = scrapy.Field()
+    renter_sex = scrapy.Field()
+    phone_number = scrapy.Field()
+    sex_limit = scrapy.Field()
+    date_time = scrapy.Field()
