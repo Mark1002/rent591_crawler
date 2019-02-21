@@ -12,7 +12,7 @@ class Rent591Spider(scrapy.Spider):
     except_list = []
 
     def start_requests(self):
-        page_num = 3
+        page_num = 2
         cookies_mapping = {
             '台北市': 1,
             '新北市': 3,
@@ -34,7 +34,8 @@ class Rent591Spider(scrapy.Spider):
         res = json.loads(response.body.decode("utf-8"))
         for house_info in res['data']['data']:
             house_id = house_info['houseid']
-            renter_type, renter = house_info['nick_name'].split()
+            renter_type = house_info['nick_name'].split()[0]
+            renter = house_info['linkman']
             detail_url = f'https://rent.591.com.tw/rent-detail-{house_id}.html'
             request = scrapy.Request(
                 url=detail_url,
