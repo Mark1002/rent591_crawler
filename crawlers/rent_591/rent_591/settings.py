@@ -90,3 +90,7 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 FEED_EXPORT_ENCODING = 'utf-8'
+
+# database settings
+MONGO_URI = 'mongodb://root:example@127.0.0.1:27017/'
+MONGO_DATABASE = 'rent591'

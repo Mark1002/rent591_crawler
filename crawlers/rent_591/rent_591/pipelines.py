@@ -15,7 +15,7 @@ class Rent591Pipeline(object):
     def from_crawler(cls, crawler):
         return cls(
             db_uri=crawler.settings.get('MONGO_URI'),
-            db_name=crawler.settings.get('MONGO_DATABASE', 'items')
+            db_name=crawler.settings.get('MONGO_DATABASE')
         )
 
     def open_spider(self, spider):
