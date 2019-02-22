@@ -8,23 +8,28 @@ class Rent591Pipeline(object):
     collection_name = 'rents'
 
     def __init__(self, db_uri, db_name):
+        """init."""
         self.db_uri = db_uri
         self.db_name = db_name
 
     @classmethod
     def from_crawler(cls, crawler):
+        """Get crawler global settings."""
         return cls(
             db_uri=crawler.settings.get('MONGO_URI'),
             db_name=crawler.settings.get('MONGO_DATABASE')
         )
 
     def open_spider(self, spider):
+        """Open spider."""
         self.client = pymongo.MongoClient(self.db_uri)
         self.db = self.client[self.db_name]
 
     def close_spider(self, spider):
+        """Close spider."""
         self.client.close()
 
     def process_item(self, item, spider):
+        """Save item to db."""
         self.db[self.collection_name].insert_one(dict(item))
         return item

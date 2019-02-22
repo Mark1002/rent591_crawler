@@ -14,6 +14,7 @@ class Rent591Spider(scrapy.Spider):
     except_list = []
 
     def start_requests(self):
+        """Init spider request."""
         page_num = 2
         cookies_mapping = {
             '台北市': 1,
@@ -32,7 +33,6 @@ class Rent591Spider(scrapy.Spider):
 
     def parse_house_id(self, response):
         """Parse for house id."""
-
         res = json.loads(response.body.decode("utf-8"))
         for house_info in res['data']['data']:
             house_id = house_info['houseid']
