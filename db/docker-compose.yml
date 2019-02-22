@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    container_name: rent591-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports: 
+      - 27017:27017
+    volumes: 
+      - mongo_data:/data/db 
+    networks:
+      - rent591 
+
+  mongo-express:
+    image: mongo-express
+    container_name: rent591-mongo-express
+    restart: always
+    ports:
+      - 28081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    networks:
+      - rent591 
+
+volumes:
+  mongo_data: 
+
+networks:
+  rent591: 
