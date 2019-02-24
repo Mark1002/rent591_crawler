@@ -1,7 +1,6 @@
 """API business logic."""
 from typing import List
 import pymongo
-
 from db import settings
 
 
@@ -11,17 +10,23 @@ def get_rent_house_list(**kwargs) -> List[dict]:
 
     Parameters
     ----------
-    sex_limit: int
+    sex_limit: int (0/male, 1/female, 2/both)
     phone_number: str
     city: str
-    renter_sex: str
-    home_owner: bool
+    renter_sex: int (0/male, 1/female)
+    home_owner: int (0/not home owner, 1/home owner)
     first_name: str
 
     """
     client = pymongo.MongoClient(settings.MONGO_URI)
     db_name = settings.MONGO_DATABASE
 
+    if 'home_owner' in kwargs.keys():
+        is_home_owner = bool(kwargs.pop('home_owner'))
+        if is_home_owner:
+            kwargs['renter_type'] = '屋主'
+        else:
+            kwargs['renter_type'] = {'$ne': '屋主'}
     cursor = client[db_name]['rents'].find(kwargs)
     rent_list = [{
         'house_id': rent['house_id'],
