@@ -1,5 +1,6 @@
 """Rent591 data pipelines."""
 import pymongo
+from ajilog import logger
 
 
 class Rent591Pipeline(object):
@@ -24,6 +25,13 @@ class Rent591Pipeline(object):
         """Open spider."""
         self.client = pymongo.MongoClient(self.db_uri)
         self.db = self.client[self.db_name]
+        # for mongoDB string index
+        self.db[self.collection_name].create_index([
+            ('$**', pymongo.TEXT)
+        ])
+        # create unique key on house id
+        self.db[self.collection_name].create_index([
+            ('house_id', pymongo.ASCENDING)], unique=True)
 
     def close_spider(self, spider):
         """Close spider."""
@@ -31,5 +39,8 @@ class Rent591Pipeline(object):
 
     def process_item(self, item, spider):
         """Save item to db."""
-        self.db[self.collection_name].insert_one(dict(item))
+        try:
+            self.db[self.collection_name].insert_one(dict(item))
+        except Exception as e:
+            logger.debug(str(e))
         return item

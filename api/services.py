@@ -27,6 +27,11 @@ def get_rent_house_list(**kwargs) -> List[dict]:
             kwargs['renter_type'] = '屋主'
         else:
             kwargs['renter_type'] = {'$ne': '屋主'}
+
+    if 'first_name' in kwargs.keys():
+        first_name = kwargs.pop('first_name')
+        kwargs['renter'] = {'$regex': first_name}
+
     cursor = client[db_name]['rents'].find(kwargs)
     rent_list = [{
         'house_id': rent['house_id'],

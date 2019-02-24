@@ -15,7 +15,7 @@ class Rent591Spider(scrapy.Spider):
 
     def start_requests(self):
         """Init spider request."""
-        page_num = 2
+        page_num = 350
         cookies_mapping = {
             '台北市': 1,
             '新北市': 3,
