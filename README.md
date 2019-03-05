@@ -11,7 +11,7 @@ set up mongoDB (need docker/docker-compose before install)
 > docker-compose up -d
 ```
 
-start scrapy web scrawler
+start scrapy web crawler
 ```
 > cd crawlers/rent_591
 > scrapy crawl rent591
